@@ -28,6 +28,10 @@ int _printf(const char *t, ...)
 				case 's':
 					char_count += printf("%s", va_arg(args, const char *));
 					break;
+				case 'd':
+				case 'i':
+					char_count += printf("%d", va_arg(args, int));
+					break;
 				case '%':
 					char_count += _putchar('%');
 					break;
