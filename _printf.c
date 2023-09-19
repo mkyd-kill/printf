@@ -1,73 +1,50 @@
 #include "main.h"
 
-void print_buffer(char buffer[], int *buff_ind);
-
 /**
- * _printf - custom printf function
+ * _printf - custom function
+ * @t: format
  *
- * @format: format string
- *
- * Return: number of chars printed
+ * Return: printed chars
  */
 
-int _printf(const char *format, ...)
+int _printf(const char *t, ...)
 {
 	va_list args;
-	char buffer[BUFF_SIZE];
-        int buff_ind = 0;
-        int printed_chars = 0;
-        int i;
-        int printed = handle_print(format, &i, args, buffer);
+	int char_count = 0;
 
-	if (format == NULL)
-		return (-1);
+	va_start(args, t);
 
-	va_start(args, format);
-
-	for (i = 0; format[i] != '\0'; i++)
+	while (*t)
 	{
-		if (format[i] != '%')
+		if (*t == '%')
 		{
-			buffer[buff_ind++] = format[i];
-			if (buff_ind == BUFF_SIZE)
-				print_buffer(buffer, &buff_ind);
-			printed_chars++;
+			t++;
+
+			switch (*t)
+			{
+				case 'c':
+					char_count += _putchar(va_arg(args, int));
+					break;
+				case 's':
+					char_count += printf("%s", va_arg(args, const char *));
+					break;
+				case '%':
+					char_count += _putchar('%');
+					break;
+				default:
+					_putchar('%');
+					char_count++;
+					break;
+			}
 		}
 		else
 		{
-			print_buffer(buffer, &buff_ind);
-			i++;
-			if (format[i] == '\0')
-				break;
-
-			if (printed == -1)
-			{
-				va_end(args);
-				return (-1);
-			}
-			printed_chars += printed;
+			_putchar(*t);
+			char_count++;
 		}
+		t++;
 	}
 
-	print_buffer(buffer, &buff_ind);
 	va_end(args);
-
-	return (printed_chars);
+	return (char_count);
 }
-
-/**
- * print_buffer - prints the contents of the buffer if it exists
- *
- * @buffer: array
- * @buff_ind: index
- */
-
- void print_buffer(char buffer[], int *buff_ind)
-{
-	if (*buff_ind > 0)
-	{
-		write(1, &buffer[0], *buff_ind);
-		*buff_ind = 0;
-	}
-}
-
