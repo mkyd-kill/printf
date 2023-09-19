@@ -11,11 +11,7 @@ int _printf(const char *t, ...)
 {
 	va_list args;
 	int char_count = 0;
-	unsigned int n = va_arg(args, unsigned int);
-	char binary[33];
-	int d = 0;
-	int i;
-	
+
 	va_start(args, t);
 
 	while (*t)
@@ -35,28 +31,6 @@ int _printf(const char *t, ...)
 				case 'd':
 				case 'i':
 					char_count += printf("%d", va_arg(args, int));
-					break;
-				case 'b':
-					{
-						while (n > 0)
-						{
-							binary[index++] = (num & 1) ? '1' : '0';
-							num >>= 1;
-						}
-						if (d == 0)
-						{
-							binary[d++] = '0';
-						}
-						binary[d] = '\0';
-
-						for (i = 0, j = d - 1; i < j; i++, j--)
-						{
-							p = binary[i];
-							binary[i] = binary[j];
-							binary[j] = p;
-						}
-						char_count += printf("%s", binary);
-					}
 					break;
 				case '%':
 					char_count += _putchar('%');
