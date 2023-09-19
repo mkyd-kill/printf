@@ -44,6 +44,9 @@ int _printf(const char *t, ...)
 				case 'X':
 					char_count += printf("%X", va_arg(args, unsigned int));
 					break;
+				case 'p':
+					char_count += printf("%p", va_arg(args, void *));
+					break;
 				case '%':
 					char_count += _putchar('%');
 					break;
