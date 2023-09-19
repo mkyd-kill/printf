@@ -1,5 +1,6 @@
 #include "main.h"
 
+
 /**
  * _printf - custom function
  * @t: format
@@ -46,6 +47,9 @@ int _printf(const char *t, ...)
 					break;
 				case 'p':
 					char_count += printf("%p", va_arg(args, void *));
+					break;
+				case 'r':
+					char_count += handle_r_specifier(get_next_string(args));
 					break;
 				case '%':
 					char_count += _putchar('%');
