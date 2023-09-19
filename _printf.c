@@ -32,6 +32,18 @@ int _printf(const char *t, ...)
 				case 'i':
 					char_count += printf("%d", va_arg(args, int));
 					break;
+				case 'u':
+					char_count += printf("%u", va_arg(args, unsigned int));
+					break;
+				case 'o':
+					char_count += printf("%o", va_arg(args, unsigned int));
+					break;
+				case 'x':
+					char_count += printf("%x", va_arg(args, unsigned int));
+					break;
+				case 'X':
+					char_count += printf("%X", va_arg(args, unsigned int));
+					break;
 				case '%':
 					char_count += _putchar('%');
 					break;
